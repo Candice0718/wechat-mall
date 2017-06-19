@@ -1,0 +1,38 @@
+<style lang="less">
+.weui-grids > .weui-grid{
+  border: 0;
+}
+</style>
+<template>
+  <view class="page">
+    <view class="page__bd">
+      <view class="weui-grids">
+          <repeat for="{{iconInfo}}" key="index" index="index" item="item">
+              <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+                  <image class="weui-grid__icon" src="{{item.imagelUrl}}" />
+                  <view class="weui-grid__label">{{item.tip}}</view>
+              </navigator>
+          </repeat>
+      </view>
+      </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  // import abc from 'abc'
+
+  export default class iconGrid extends wepy.component {
+    props = {
+      iconInfo: {
+        type: Array,
+        requried: true
+      }
+    };
+    methods = {
+      // 事件处理函数
+      swiperchange: function(e) {
+          // console.log(e.detail.current)
+      }
+    }
+  }
+</script>

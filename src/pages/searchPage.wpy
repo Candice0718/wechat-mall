@@ -1,0 +1,33 @@
+<style lang="less">
+.weui-search-bar {
+  @backgroundColor : #c80001;
+  background-color: @backgroundColor;
+}
+</style>
+<template lang="wxml">
+  <searchBar></searchBar>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import searchBar from '../components/searchBar'
+  import testMixin from '../mixins/test'
+  export default class searchPage extends wepy.page {
+    config = {
+      navigationBarTitleText: '搜索'
+    }
+    components = {
+      searchBar: searchBar
+    }
+    mixins = [testMixin]
+
+    data = {
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+  }
+</script>

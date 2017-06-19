@@ -1,0 +1,97 @@
+<style lang="less" src="../static/categories.less"></style>
+<template>
+  <view class="container">
+    <!-- 分类页面 -->
+    <!-- 搜索框 开始 -->
+    <view class="searchbar weui-flex__item">
+      <view class="weui-search-bar">
+        <view class="weui-search-bar__form">
+            <view class="weui-search-bar__box">
+                <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                <input type="text" class="weui-search-bar__input" placeholder="搜索"/>
+            </view>
+            <label class="weui-search-bar__label" bindtap="inputTyping">
+                <icon class="weui-icon-search" type="search" size="14"></icon>
+                <view class="weui-search-bar__text">搜索</view>
+            </label>
+        </view>
+      </view>
+    </view>
+    <!-- 搜索框 结束 -->
+    <view class="container">
+      <view class="nav_left">
+        <repeat for="{{navLeftItems}}" index="index" key = "index" item = "item">
+          <view class="nav_left_items {{curNav == item.id ? 'active' : ''}}" bindtap="switchRightTab" data-index="{{index}}" data-id="{{item.id}}">{{item.tree.desc}}</view>
+        </repeat>
+      </view>
+      <view class="nav_right">
+      <view wx:if="{{navRightItems[curIndex].tree.nodes[1].tree.nodes}}">
+        <repeat for="{{navRightItems[curIndex].tree.nodes[1].tree.nodes}}" key= "index" index = "index" item = "item">
+          <view class="nav_right_items">
+            <navigator url="../list/index?brand={{item.tree.id}}&typeid={{navRightItems[curIndex].id}}">
+              <view>
+                <block wx:if="{{item.tree.logo}}">
+                  <image src="{{item.tree.logo}}"></image>
+                </block>
+                <block wx:else>
+                  <image src="http://temp.im/50x30"></image>
+                </block>
+              </view>
+              <view wx:if="{{item.tree.desc}}">
+                <text>{{item.tree.desc}}</text>
+              </view>
+              <view wx:else>
+                <text>{{item.tree.desc2}}</text>
+              </view>
+            </navigator>
+          </view>
+        </repeat>
+      </view>
+      <view wx:else>暂无数据</view>
+    </view>
+  </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  // import Toast from 'wepy-com-toast'
+  // import testMixin from '../mixins/test'
+  import searchBar from '../components/searchBar'
+  import menu from '../mock/categories.js'
+  export default class Categories extends wepy.page {
+    components = {
+      searchBar: searchBar
+    }
+    config = {
+      navigationBarTitleText: '分类'
+    }
+    data = {
+      curNav: 1,
+      curIndex: 0,
+      navLeftItems: [],
+      navRightItems: []
+    }
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+    onLoad() {
+      this.navLeftItems = menu.menu
+      this.navRightItems = menu.menu
+    }
+    methods = {
+      inputTyping () {
+        this.$navigate('searchPage')
+      },
+      // 事件处理函数
+      switchRightTab: function(e) {
+        let id = e.target.dataset.id
+        let index = parseInt(e.target.dataset.index)
+        this.curNav = id
+        this.curIndex = index
+      }
+    }
+  }
+</script>

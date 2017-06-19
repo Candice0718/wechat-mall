@@ -1,0 +1,59 @@
+<style lang="less">
+.carousel {
+  width: 100%;
+}
+.carousel image {
+  width: 100%;
+}
+</style>
+<template>
+  <view class="carousel">
+    <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" vertical="{{vertical}}"
+             autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular bindchange="swiperchange">
+         <repeat for="{{images}}" key="index" index="index" item="item">
+             <swiper-item>
+                 <image src="{{item.picurl}}" class="slide-image"/>
+             </swiper-item>
+         </repeat>
+     </swiper>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  // import abc from 'abc'
+
+  export default class Counter extends wepy.component {
+    props = {
+      images: {
+        type: Array,
+        requried: true
+      },
+      indicatorDots: {
+        type: Boolean,
+        default: true
+      },
+      vertical: {
+        type: Boolean,
+        default: false
+      },
+      autoplay: {
+        type: Boolean,
+        default: true
+      },
+      interval: {
+        type: Number,
+        default: 3000
+      },
+      duration: {
+        type: Number,
+        default: 1000
+      }
+    };
+    methods = {
+      // 事件处理函数
+      swiperchange: function(e) {
+          // console.log(e.detail.current)
+      }
+    }
+  }
+</script>
