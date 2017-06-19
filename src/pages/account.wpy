@@ -1,112 +1,167 @@
-<style lang="less" src="../static/index.less"></style>
+<style lang="less">
+@title1: 14px;
+page{
+  background-color: #eee;
+}
+.container {
+  background-color: #eee;
+}
+.account-userInfo {
+  height: 100px;
+}
+.account-userInfo image {
+  margin-right: 5px;
+  vertical-align: middle;
+  width:80px;
+  height: 80px;
+  border-radius: 50%;
+}
+.account-grid{
+  width: 20%;
+  border: 0;
+  padding: 10px 10px;
+}
+.weui-grid__label {
+  font-size: 12px;
+}
+.account-bag{
+  width: 25%;
+  padding: 8px 10px;
+}
+.title-label {
+  font-size: @title1;
+}
+.account-grids {
+  background-color: #fff;
+  display: block;
+  overflow: hidden;
+}
+.padding-gap {
+  content: "";
+  height: 8px;
+  background-color: #eee;
+}
+</style>
 <template lang="wxml">
   <!-- 我的页面 -->
   <view class="container">
-    <carousel :images="images"></carousel>
+    <view class="weui-cells weui-cells_after-title">
+      <!-- 用户头像 开始 -->
+      <view class="weui-cell weui-cell_access account-userInfo">
+          <view class="weui-cell__hd">
+              <image src="{{userinfo.avatarUrl}}"></image>
+          </view>
+          <view class="weui-cell__bd">{{userinfo.nickName}}</view>
+      </view>
+        <!-- 用户头像 结束 -->
+        <view class="padding-gap"></view>
+        <!-- 我的订单状态 -->
+      <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <view class="weui-cell__bd title-label">我的订单</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access title-label">查看全部订单</view>
+      </navigator>
+      <view class="weui-grids">
+        <navigator url="" class="weui-grid account-grid" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/pay.png" />
+            <view class="weui-grid__label">代支付</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-grid" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/delivery.png" />
+            <view class="weui-grid__label">代发货</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-grid" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/sending.png" />
+            <view class="weui-grid__label">配送中</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-grid" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/comment.png" />
+            <view class="weui-grid__label">代评论</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-grid" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/appointment.png" />
+            <view class="weui-grid__label">预约中</view>
+        </navigator>
+      </view>
+      <view class="padding-gap"></view>
+
+      <!-- 我的钱包 -->
+      <view class="weui-cell weui-cell_access">
+          <view class="weui-cell__bd title-label">我的钱包</view>
+      </view>
+      <view class="account-grids" style="border-top:1rpx solid #D9D9D9;">
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <view class="weui-grid__label">5</view>
+            <view class="weui-grid__label">积分</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+          <view class="weui-grid__label">6</view>
+            <view class="weui-grid__label">预付款</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <view class="weui-grid__label">7</view>
+            <view class="weui-grid__label">抵用券</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <view class="weui-grid__label">8</view>
+            <view class="weui-grid__label">鸥点</view>
+        </navigator>
+      </view>
+      <view class="padding-gap"></view>
+      <!-- 其他功能 -->
+      <view class="account-grids">
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/club.png" />
+            <view class="weui-grid__label">会员俱乐部</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/fav.png" />
+            <view class="weui-grid__label">我的收藏</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/pay.png" />
+            <view class="weui-grid__label">发票管理</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/chat.png" />
+            <view class="weui-grid__label">东东客服</view>
+        </navigator>
+
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/suggest.png" />
+            <view class="weui-grid__label">公告事项</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/stash.png" />
+            <view class="weui-grid__label">站内信</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/gift.png" />
+            <view class="weui-grid__label">礼包</view>
+        </navigator>
+        <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" src="../images/change.png" />
+            <view class="weui-grid__label">礼券兑换</view>
+        </navigator>
+      </view>
+    </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
-  import carousel from '../components/carousel'
-  import testMixin from '../mixins/test'
-
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'Candice小商城'
+      navigationBarTitleText: '我的'
     }
-    components = {
-      carousel: carousel
-    }
-
-    mixins = [testMixin]
-
     data = {
-      images: [
-        {
-          picurl: '../images/index/carousel1.jpg',
-          targeturl: ''
-        },
-        {
-          picurl: '../images/index/carousel2.jpg',
-          targeturl: ''
-        }
-      ]
+      userinfo: {}
     }
-
-    computed = {
-      now () {
-        return +new Date()
-      }
-    }
-
-    methods = {
-      plus () {
-        this.mynum++
-      },
-      toast () {
-        let promise = this.$invoke('toast', 'show', {
-          title: '自定义标题',
-          img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
-        })
-
-        promise.then((d) => {
-          console.log('toast done')
-        })
-      },
-      tap () {
-        console.log('do noting from ' + this.$name)
-      },
-      communicate () {
-        console.log(this.$name + ' tap')
-
-        this.$invoke('counter2', 'minus', 45, 6)
-        this.$invoke('counter1', 'plus', 45, 6)
-
-        this.$broadcast('index-broadcast', 1, 3, 4)
-      },
-      request () {
-        let self = this
-        let i = 10
-        let map = ['MA==', 'MQo=', 'Mg==', 'Mw==', 'NA==', 'NQ==', 'Ng==', 'Nw==', 'OA==', 'OQ==']
-        while (i--) {
-          wepy.request({
-            url: 'https://www.madcoder.cn/tests/sleep.php?time=1&t=css&c=' + map[i] + '&i=' + i,
-            success: function (d) {
-              self.netrst += d.data + '.'
-              self.$apply()
-            }
-          })
-        }
-      },
-      counterEmit (...args) {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
-    }
-
-    events = {
-      'index-emit': (...args) => {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
-    }
-
     onLoad() {
       let self = this
       this.$parent.getUserInfo(function (userInfo) {
         if (userInfo) {
-          self.userInfo = userInfo
+          self.userinfo = userInfo
         }
-        self.normalTitle = '标题已被修改'
-
-        self.setTimeoutTitle = '标题三秒后会被修改'
-        setTimeout(() => {
-          self.setTimeoutTitle = '到三秒了'
-          self.$apply()
-        }, 3000)
-
-        self.$apply()
       })
     }
   }

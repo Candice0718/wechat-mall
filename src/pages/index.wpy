@@ -6,7 +6,7 @@
     <view class="header-bar">
       <view class="weui-flex">
         <view class="logo weui-flex__item">
-          <image src="../images/index/logo.png"/>
+          <image src="../images/index/logo.png" mode="aspectFit"/>
         </view>
         <view class="searchbar weui-flex__item">
           <view class="weui-search-bar">
@@ -57,7 +57,7 @@
           targeturl: ''
         },
         {
-          picurl: '../images/index/carousel2.jpg',
+          picurl: '../images/index/carousel2.png',
           targeturl: ''
         }
       ],
