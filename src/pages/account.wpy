@@ -118,7 +118,7 @@ page{
             <view class="weui-grid__label">我的收藏</view>
         </navigator>
         <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
-            <image class="weui-grid__icon" src="../images/pay.png" />
+            <image class="weui-grid__icon" src="../images/receipt.png" />
             <view class="weui-grid__label">发票管理</view>
         </navigator>
         <navigator url="" class="weui-grid account-bag" hover-class="weui-grid_active">
@@ -149,6 +149,7 @@ page{
 
 <script>
   import wepy from 'wepy'
+  import interfaces from '../interfaces/userInfo.js'
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '我的'
@@ -156,13 +157,13 @@ page{
     data = {
       userinfo: {}
     }
-    onLoad() {
+    async onLoad() {
       let self = this
-      this.$parent.getUserInfo(function (userInfo) {
-        if (userInfo) {
-          self.userinfo = userInfo
-        }
-      })
+      const userInfo = await interfaces.getUserInfo()
+      if (userInfo) {
+        self.userinfo = userInfo.userInfo
+      }
+      self.$apply()
     }
   }
 </script>
