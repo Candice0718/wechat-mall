@@ -1,0 +1,28 @@
+<style lang="less">
+.video > video{
+  width: 100%;
+}
+</style>
+<template>
+  <view class="video">
+    <video src="{{videoPath}}" controls bindplay="playVideo"></video>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  // import abc from 'abc'
+
+  export default class candiceVideo extends wepy.component {
+    props = {
+      videoPath: {
+        type: String,
+        requried: true
+      }
+    };
+    methods = {
+      playVideo(e) {
+        console.log(e)
+      }
+    }
+  }
+</script>
