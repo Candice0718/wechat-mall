@@ -17,7 +17,7 @@
   import globalSearch from '../components/globalSearch'
   import lazyLoading from '../Utils/lazyLoading.js'
 
-  export default class Index extends wepy.page {
+  export default class List extends wepy.page {
     config = {
       navigationBarTitleText: '商品列表'
     }

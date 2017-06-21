@@ -11,7 +11,7 @@
   import carousel from '../components/carousel'
   import testMixin from '../mixins/test'
 
-  export default class Index extends wepy.page {
+  export default class cart extends wepy.page {
     config = {
       navigationBarTitleText: 'Candice小商城'
     }

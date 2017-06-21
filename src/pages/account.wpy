@@ -150,7 +150,7 @@ page{
 <script>
   import wepy from 'wepy'
   import interfaces from '../interfaces/userInfo.js'
-  export default class Index extends wepy.page {
+  export default class account extends wepy.page {
     config = {
       navigationBarTitleText: '我的'
     }
