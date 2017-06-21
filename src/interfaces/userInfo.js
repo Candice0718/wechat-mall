@@ -7,11 +7,19 @@ const interfaces = {
     if (Object.keys(value).length !== 0) {
       return value
     } else {
-      const loginData = await wepy.login()
-      const userinfo = await wepy.getUserInfo()
-      userinfo.code = loginData.code
-      this.userInfo = userinfo
-      return userinfo
+      const authorizeList = await wepy.getSetting()
+      if (!authorizeList['scope.userInfo']) {
+        try {
+          const isAuthorize = await wepy.authorize({scope: 'scope.userInfo'})
+          const loginData = await wepy.login()
+          const userinfo = await wepy.getUserInfo()
+          userinfo.code = loginData.code
+          this.userInfo = userinfo
+          return userinfo
+        } catch(e) {
+          console.log('授权获取用户信息失败')
+        }
+      }
     }
   },
   async login () {
