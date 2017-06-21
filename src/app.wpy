@@ -21,7 +21,8 @@ export default class extends wepy.app {
       'pages/main',
       'pages/cart',
       'pages/account',
-      'pages/searchPage'
+      'pages/searchPage',
+      'pages/list'
     ],
     window: {
       backgroundColor: '#eee',

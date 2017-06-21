@@ -8,7 +8,7 @@
     <view class="page__bd">
       <view class="weui-grids">
           <repeat for="{{iconInfo}}" key="index" index="index" item="item">
-              <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+              <navigator url="{{item.targeturl}}" class="weui-grid" hover-class="weui-grid_active">
                   <image class="weui-grid__icon" src="{{item.imagelUrl}}" />
                   <view class="weui-grid__label">{{item.tip}}</view>
               </navigator>
@@ -20,8 +20,8 @@
 <script>
   import wepy from 'wepy'
   // import abc from 'abc'
-
   export default class iconGrid extends wepy.component {
+    // iconInfo:{imagelUrl,tip,targeturl}
     props = {
       iconInfo: {
         type: Array,

@@ -1,0 +1,36 @@
+<style lang="less">
+@backgroundColor: #c80001;
+.searchbar > .weui-search-bar {
+  background-color: @backgroundColor;
+}
+</style>
+<template>
+  <view class="searchbar weui-flex__item">
+    <view class="weui-search-bar">
+      <view class="weui-search-bar__form">
+          <view class="weui-search-bar__box">
+              <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+              <input type="text" class="weui-search-bar__input" placeholder="搜索"/>
+          </view>
+          <label class="weui-search-bar__label" bindtap="inputTyping">
+              <icon class="weui-icon-search" type="search" size="14"></icon>
+              <view class="weui-search-bar__text">搜索</view>
+          </label>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class globalSearch extends wepy.component {
+    data = {
+      inputShowed: false,
+      inputVal: ''
+    };
+    methods = {
+      inputTyping () {
+        this.$parent.$navigate('searchPage')
+      }
+    }
+  }
+</script>

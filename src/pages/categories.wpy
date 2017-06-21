@@ -3,20 +3,7 @@
   <view class="container">
     <!-- 分类页面 -->
     <!-- 搜索框 开始 -->
-    <view class="searchbar weui-flex__item">
-      <view class="weui-search-bar">
-        <view class="weui-search-bar__form">
-            <view class="weui-search-bar__box">
-                <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                <input type="text" class="weui-search-bar__input" placeholder="搜索"/>
-            </view>
-            <label class="weui-search-bar__label" bindtap="inputTyping">
-                <icon class="weui-icon-search" type="search" size="14"></icon>
-                <view class="weui-search-bar__text">搜索</view>
-            </label>
-        </view>
-      </view>
-    </view>
+    <globalSearch></globalSearch>
     <!-- 搜索框 结束 -->
     <view class="container">
       <view class="nav_left">
@@ -57,11 +44,11 @@
   import wepy from 'wepy'
   // import Toast from 'wepy-com-toast'
   // import testMixin from '../mixins/test'
-  import searchBar from '../components/searchBar'
+  import globalSearch from '../components/globalSearch'
   import menu from '../mock/categories.js'
   export default class Categories extends wepy.page {
     components = {
-      searchBar: searchBar
+      globalSearch: globalSearch
     }
     config = {
       navigationBarTitleText: '分类'

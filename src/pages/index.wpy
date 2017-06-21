@@ -86,39 +86,48 @@
       iconInfo: [
         {
           imagelUrl: '../images/iconGrid/0.png',
-          tip: '看视频'
+          tip: '美食',
+          targeturl: 'list'
         },
         {
           imagelUrl: '../images/iconGrid/1.png',
-          tip: '看视频1'
+          tip: '看视频1',
+          targeturl: ''
         },
         {
           imagelUrl: '../images/iconGrid/2.png',
-          tip: '看视频2'
+          tip: '看视频2',
+          targeturl: ''
         },
         {
           imagelUrl: '../images/iconGrid/3.png',
-          tip: '看视频3'
+          tip: '看视频3',
+          targeturl: ''
         },
         {
           imagelUrl: '../images/iconGrid/4.png',
-          tip: '看视频4'
+          tip: '看视频4',
+          targeturl: ''
         },
         {
           imagelUrl: '../images/iconGrid/5.png',
-          tip: '看视频5'
+          tip: '看视频5',
+          targeturl: ''
         },
         {
           imagelUrl: '../images/iconGrid/6.png',
-          tip: '看视频6'
+          tip: '看视频6',
+          targeturl: ''
         },
         {
           imagelUrl: '../images/iconGrid/7.png',
-          tip: '看视频7'
+          tip: '看视频7',
+          targeturl: ''
         },
         {
           imagelUrl: '../images/iconGrid/8.png',
-          tip: '看视频8'
+          tip: '看视频8',
+          targeturl: ''
         }
       ],
       pdtItemInfo: {
