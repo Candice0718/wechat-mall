@@ -5,7 +5,7 @@
   <view class="weui-cells weui-cells_after-title">
     <navigator url="{{pdtItemInfo.targetUrl}}" class="weui-cell weui-cell_access" style="display:block;" hover-class="weui-cell_active">
         <view class="list-image" style="height: 150px;">
-            <image src="{{pdtItemInfo.imageUrl}}" style="width: 100%;height: 100%;"></image>
+            <image wx:if = "{{showPicture}}" src="{{pdtItemInfo.imageUrl}}" style="width: 100%;height: 100%;"></image>
         </view>
         <view class="list-tips" style="display:flex;">
             <view class="list-tips__label_left" style="flex:6;overflow:hidden;">{{pdtItemInfo.leftLabel}}</view>
@@ -22,6 +22,10 @@
       pdtItemInfo: {
         type: Object,
         requried: true
+      },
+      showPicture: {
+        type: Boolean,
+        default: true
       }
     };
   }

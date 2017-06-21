@@ -4,15 +4,18 @@
   <!-- 搜索框 开始 -->
   <globalSearch></globalSearch>
   <!-- 商品列表 -->
-  <repeat for="{{listInfo}}" index="index" key="index" item = "item">
-    <pdtItemPicture :pdtItemInfo="item"></pdtItemPicture>
-  </repeat>
+   <scroll-view style="height:667px;" scroll-y="true" bindscroll="scrollHide">
+     <repeat for="{{listInfo}}" index="index" key="index" item = "item">
+       <pdtItemPicture :pdtItemInfo="item" :showPicture="(showIndex + 4 > index) && (showIndex - 3 < index)"></pdtItemPicture>
+     </repeat>
+   </scroll-view>
 </template>
 
 <script>
   import wepy from 'wepy'
   import pdtItemPicture from '../components/pdtItemPicture'
   import globalSearch from '../components/globalSearch'
+  import lazyLoading from '../Utils/lazyLoading.js'
 
   export default class Index extends wepy.page {
     config = {
@@ -23,105 +26,80 @@
       globalSearch: globalSearch
     }
     data = {
+      scrollData: {
+        offetHeight: 40, // px
+        height: 194, // px
+        colunm: 1
+      },
+      showIndex: 0,
       listInfo: [
         {
           targetUrl: '',
           imageUrl: '../images/index/carousel2.png',
-          leftLabel: '生鲜美食团',
+          leftLabel: '生鲜美食团1',
           rightLabel: '跌破低价'
         },
         {
           targetUrl: '',
           imageUrl: '../images/index/carousel1.jpg',
-          leftLabel: '嗨玩一夏',
+          leftLabel: '嗨玩一夏2',
           rightLabel: '邀你来玩'
         },
         {
           targetUrl: '',
           imageUrl: '../images/index/carousel2.png',
-          leftLabel: '生鲜美食团',
+          leftLabel: '生鲜美食团3',
           rightLabel: '跌破低价'
         },
         {
           targetUrl: '',
           imageUrl: '../images/index/carousel1.jpg',
-          leftLabel: '嗨玩一夏',
+          leftLabel: '嗨玩一夏4',
           rightLabel: '邀你来玩'
         },
         {
           targetUrl: '',
           imageUrl: '../images/index/carousel2.png',
-          leftLabel: '生鲜美食团',
+          leftLabel: '生鲜美食团5',
           rightLabel: '跌破低价'
         },
         {
           targetUrl: '',
           imageUrl: '../images/index/carousel1.jpg',
-          leftLabel: '嗨玩一夏',
+          leftLabel: '嗨玩一夏6',
+          rightLabel: '邀你来玩'
+        },
+        {
+          targetUrl: '',
+          imageUrl: '../images/index/carousel1.jpg',
+          leftLabel: '嗨玩一夏7',
+          rightLabel: '邀你来玩'
+        },
+        {
+          targetUrl: '',
+          imageUrl: '../images/index/carousel2.png',
+          leftLabel: '生鲜美食团8',
+          rightLabel: '跌破低价'
+        },
+        {
+          targetUrl: '',
+          imageUrl: '../images/index/carousel1.jpg',
+          leftLabel: '嗨玩一夏9',
           rightLabel: '邀你来玩'
         }
       ]
     }
-
-    computed = {
-      now () {
-        return +new Date()
-      }
-    }
-
     methods = {
-      plus () {
-        this.mynum++
-      },
-      toast () {
-        let promise = this.$invoke('toast', 'show', {
-          title: '自定义标题',
-          img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
-        })
-
-        promise.then((d) => {
-          console.log('toast done')
-        })
-      },
-      tap () {
-        console.log('do noting from ' + this.$name)
-      },
-      communicate () {
-        console.log(this.$name + ' tap')
-
-        this.$invoke('counter2', 'minus', 45, 6)
-        this.$invoke('counter1', 'plus', 45, 6)
-
-        this.$broadcast('index-broadcast', 1, 3, 4)
-      },
-      request () {
-        let self = this
-        let i = 10
-        let map = ['MA==', 'MQo=', 'Mg==', 'Mw==', 'NA==', 'NQ==', 'Ng==', 'Nw==', 'OA==', 'OQ==']
-        while (i--) {
-          wepy.request({
-            url: 'https://www.madcoder.cn/tests/sleep.php?time=1&t=css&c=' + map[i] + '&i=' + i,
-            success: function (d) {
-              self.netrst += d.data + '.'
-              self.$apply()
-            }
-          })
-        }
-      },
-      counterEmit (...args) {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+      scrollHide(e) {
+        let data = [
+          this.data.scrollData.offetHeight,
+          e.detail.scrollTop,
+          this.data.scrollData.height,
+          this.data.scrollData.colunm
+        ]
+        let index = lazyLoading.countIndex(...data)
+        this.showIndex = index
       }
-    }
-
-    events = {
-      'index-emit': (...args) => {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
-    }
-
-    onLoad() {
     }
   }
 </script>
