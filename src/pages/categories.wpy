@@ -65,8 +65,8 @@
       }
     }
     onLoad() {
-      this.navLeftItems = menu.menu
-      this.navRightItems = menu.menu
+      this.navLeftItems = menu
+      this.navRightItems = menu
     }
     methods = {
       inputTyping () {

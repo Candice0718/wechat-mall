@@ -516,4 +516,4 @@ const menu =
     }
   }
 ];
-exports.menu = menu
+export default menu
