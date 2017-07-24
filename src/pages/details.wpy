@@ -1,0 +1,281 @@
+<style lang="less">
+@mainColor: #c80001;
+.details-carousel {
+  width: 100%;
+}
+.details-carousel image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.details-carousel > .swiper_box {
+  height: 250px;
+}
+.details-summary {
+  height: 60px;
+  border: 1px solid #eee;
+}
+.details-summary {
+  height: 60px;
+}
+.weui-flex, .weui-flex__item, .placeholder{
+  height: 100%;
+}
+.placeholder{
+  text-align: center;
+}
+.details-summary-price {
+  flex: 3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.details-summary-price > .symbol {
+  font-size: 12px;
+  margin-top: 12px;
+  color: @mainColor;
+}
+.details-summary-price > .number {
+  font-size: 22px;
+  color: @mainColor;
+}
+.details-summary-detail, .details-summary-saled{
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.originPrice {
+  font-size: 16px;
+  color: #999;
+  text-decoration:line-through;
+}
+.activityName{
+  margin-left: 8px;
+  font-size: 16px;
+  color: @mainColor;
+}
+.showSpecifications-summary{
+  display: flex;
+  align-items: center;
+}
+.selectedSpec{
+  background-color: @mainColor !important;
+}
+.pdtNavBar {
+  .weui-bar__item_on {
+    color: @mainColor !important;
+  }
+  .weui-navbar__slider {
+    background-color: @mainColor !important;
+  }
+}
+</style>
+<template lang="wxml">
+  <!-- 商品详情页面 -->
+  <view class="container">
+    <view class="details-carousel">
+      <swiper class="swiper_box" indicator-dots
+               autoplay interval="3000" duration="1000" circular bindchange="swiperchange">
+           <repeat for="{{pdtDetails.pdtInfo.mainPics}}" key="index" index="index" item="item">
+               <swiper-item>
+                   <image src="{{item}}" class="slide-image"/>
+               </swiper-item>
+           </repeat>
+       </swiper>
+   </view>
+  </view>
+  <!-- 商品详情 -->
+  <view class="details-summary">
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <view class="weui-flex">
+          <view class="weui-flex__item details-summary-price">
+            <span class="symbol">¥</span>
+            <span class="number">{{pdtDetails.pdtInfo.price}}</span>
+          </view>
+          <view class="weui-flex__item" style="flex: 9;">
+            <view class="details-summary-detail">
+              <span class="originPrice">¥{{pdtDetails.pdtInfo.originPrice}}</span>
+              <span class="activityName">限时促销</span>
+            </view>
+            <view class="details-summary-saled">已销售{{pdtDetails.pdtInfo.saleNum}}件</view>
+          </view>
+        </view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="placeholder">
+          <view>距结束仅剩</view>
+          <view>6天10小时14分钟</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 选择规格 -->
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  @tap="showSpecifications">
+      <view class="weui-cell__bd">选择规格</view>
+      <view class="weui-cell__ft showSpecifications-summary">
+        {{selectedStr}} {{selectedNumber}} 件
+        <image src="../images/up.png" style="width: 20px; height: 20px;" wx:if="{{!showSpecificationsDrop}}"/>
+        <image src="../images/down.png" style="width: 20px; height: 20px;" wx:if="{{showSpecificationsDrop}}"/>
+      </view>
+    </view>
+    <view style="padding-bottom: 15px;" wx:if="{{showSpecificationsDrop}}">
+      <repeat for="{{pdtDetails.vname}}" index="index" item="item">
+        <view style="display: flex;align-items: center;">
+          <view style="flex: 2; text-align: center;">{{item.label}}</view>
+          <view style="flex: 10; align-items: center;">
+              <repeat for="{{pdtDetails[item.key]}}" index="index1" item="item1">
+                <button class="weui-btn mini-btn {{(selectedSpec[item.key].item.label === item1.label && selectedDisable[item.key][index1] !== 0) ? 'selectedSpec' : ''}}" type="default" size="mini" style="margin: 3px;" disabled="{{item1.disable || selectedDisable[item.key][index1] === 0}}" @tap="checkSpec({{item1}}, {{item.key}}, {{index1}})">
+                  {{item1.label}}
+                </button>
+              </repeat>
+          </view>
+        </view>
+      </repeat>
+      <view style="display: flex;align-items: center;">
+        <view style="flex: 2; text-align: center;">数量</view>
+        <view style="flex: 10; align-items: center;display:flex;">
+          <button class="weui-btn mini-btn" type="default" size="mini" style="margin: 0; border-radius: 0;" disabled="{{selectedNumber <= 1}}" @tap="operateNumber(-1)">
+            -
+          </button>
+          <input type="number" focus="true" style="width: 50px;border: 1px solid #eeeeee;text-align:center;" bindinput="bindSelectNumber" value="{{selectedNumber}}"/>
+          <button class="weui-btn mini-btn" type="default" size="mini" style="margin: 0; border-radius: 0;" @tap="operateNumber(1)">
+            +
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 商品详情 navbar-->
+  <view class="weui-tab" style="margin-bottom: 50px;">
+    <view class="weui-navbar pdtNavBar">
+      <view wx:for="{{pdtTabs.tabs}}" wx:key="*this" id="{{index}}" class="weui-navbar__item {{pdtTabs.activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
+          <view class="weui-navbar__title">{{item}}</view>
+      </view>
+      <view class="weui-navbar__slider" style="left: {{pdtTabs.sliderLeft}}px; transform: translateX({{pdtTabs.sliderOffset}}px); -webkit-transform: translateX({{pdtTabs.sliderOffset}}px);"></view>
+    </view>
+    <view class="weui-tab__panel">
+      <view class="weui-tab__content" hidden="{{pdtTabs.activeIndex != 0}}">
+        <richEditContent :pdtid="pdtid"></richEditContent>
+      </view>
+      <view class="weui-tab__content" hidden="{{pdtTabs.activeIndex != 1}}">
+        <pdtStandard :pdtid="pdtid"></pdtStandard>
+      </view>
+      <view class="weui-tab__content" hidden="{{pdtTabs.activeIndex != 2}}">
+        <pdtComment :pdtid="pdtid"></pdtComment>
+      </view>
+    </view>
+  </view>
+  <!-- footer-bar -->
+  <view style="width: 100%; height: 50px;position: fixed; bottom:0; z-index:10;display: flex;background-color: #ffffff;">
+    <view style="height: 100%;flex: 2;text-align:center;">
+      <view style="position: relative;">
+        <image style="width: 25px;height:25px;margin-top: 5px;" src="../images/cart.png" />
+        <view style="font-size: 12px;margin-top: -5px;">购物车
+      </view>
+      <view class="weui-badge" style="position: absolute;top: .3em;right: .8em;z-index:2">10</view>
+      </view>
+    </view>
+    <view style="height: 100%;flex: 5;background-color: orange;text-align: center;color: #ffffff;line-height: 50px;">
+      加入购物车
+    </view>
+    <view style="height: 100%;flex: 5;background-color: red; color: #ffffff;text-align: center;line-height: 50px;">
+      立即购物
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import detailsData from '../mock/detailsData'
+  import richEditContent from '../components/richEditContent'
+  import pdtStandard from '../components/pdtStandard'
+  import pdtComment from '../components/pdtComment'
+  const sliderWidth = 115
+  export default class account extends wepy.page {
+    config = {
+      navigationBarTitleText: '商品详情'
+    };
+    components = {
+      richEditContent: richEditContent,
+      pdtStandard: pdtStandard,
+      pdtComment: pdtComment
+    };
+    data = {
+      pdtid: '',
+      pdtDetails: {},
+      detailsCarousel: [],
+      showSpecificationsDrop: false, // 不显示规格的model模块
+      selectedSpec: {}, // 目前选择的规格样式
+      selectedStr: '', // 选择的规格
+      selectedNumber: 1,  // 默认选择的数量为1
+      selectedDisable: {}, // 规格按钮是否有效
+      pdtTabs: { // 商品详情分页标签
+        tabs: ['图文详情', '规格参数', '评价详情'],
+        activeIndex: 0,
+        sliderOffset: 0,
+        sliderLeft: 0
+      }
+    }
+    async onLoad(options) {
+      // 获取路由地址所带的参数
+      this.pdtid = options.id
+      this.pdtDetails = detailsData.pdtDetails
+      let res = await wepy.getSystemInfo()
+      this.pdtTabs.sliderLeft = (res.windowWidth / this.pdtTabs.tabs.length - sliderWidth) / 2
+      this.pdtTabs.sliderOffset = res.windowWidth / this.pdtTabs.tabs.length * this.pdtTabs.activeIndex
+      // 注意，需要手动调用$apply()方法更新数据
+      this.$apply()
+    }
+    methods = {
+      // 幻灯片变化时调用的方法
+      swiperchange () {
+      },
+      // 选择规格 显示规格
+      showSpecifications () {
+        this.showSpecificationsDrop = !this.showSpecificationsDrop
+      },
+      // params(item, parent, index)
+      // item object 当前选择的规格
+      // parent string 当前选中的属于哪个规格
+      // index 在规格中属于第几
+      checkSpec (item, parent, index) {
+        // 选择规格
+        this.selectedSpec[parent] = {
+          item: item,
+          index: index
+        }
+        // 规格是否可以操作
+        for (let d in item.cascade) {
+          this.selectedDisable[d] = item.cascade[d]
+          // 将目前对应的不可下单的规格从选中的规格中去掉
+          if (this.selectedSpec[d]) {
+            let selectedIndex = this.selectedSpec[d].index
+            let isDisabled = item.cascade[d][selectedIndex]
+            if (isDisabled === 0) {
+              delete this.selectedSpec[d]
+            }
+          }
+        }
+        // 总的选择规格
+        this.selectedStr = ''
+        for (let k in this.selectedSpec) {
+          this.selectedStr += this.selectedSpec[k].item.label + ' '
+        }
+      },
+      // input改变选择的数量
+      bindSelectNumber (e) {
+        this.selectedNumber = e.detail.value
+      },
+      // 按钮改变数量的值
+      operateNumber (num) {
+        this.selectedNumber = Number(this.selectedNumber) + Number(num)
+      },
+      tabClick (e) {
+        this.pdtTabs.sliderOffset = e.currentTarget.offsetLeft
+        this.pdtTabs.activeIndex = e.currentTarget.id
+      }
+    }
+  }
+</script>

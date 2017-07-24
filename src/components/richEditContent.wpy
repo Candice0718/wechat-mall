@@ -1,0 +1,47 @@
+<style lang="less">
+  @import '../lib/wxParse/wxParse.wxss';
+  .wxParse-img {
+    margin: 0 auto;
+    width: 100%;
+    min-height: 200rpx;
+    display: block;
+    background-color: transparent;
+  }
+  .wxParse-image {
+    margin: 0 auto;
+    width: 100%;
+    min-height: 200rpx;
+    display: block;
+    background-color: transparent;
+  }
+</style>
+<template>
+  <view>
+    <htmlParser :parserName="pdtid" :parserContent.sync="pdtTabsPicContent"></htmlParser>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import detailsData from '../mock/detailsData'
+  import htmlParser from '../components/HTMLParser'
+  export default class richEditerContent extends wepy.component {
+    components = {
+      htmlParser: htmlParser
+    };
+    props = {
+      pdtid: {
+        type: String,
+        requried: true
+      }
+    };
+    data = {
+      pdtTabsPicContent: ''
+    };
+    async onLoad() {
+      this.pdtTabsPicContent = detailsData.navBarContent[0].content
+      this.$apply()
+      // 调用通知接口通知组件更新数据
+      this.$invoke('htmlParser', 'htmlParserNotice')
+    };
+  }
+</script>

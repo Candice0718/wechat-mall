@@ -1,0 +1,65 @@
+<style lang="less">
+</style>
+<template>
+  <view>
+    <view style="display: flex;height: 50px;line-height: 50px;font-size:16px;color: #333333;border-bottom: 0.5px solid #eeeeee;">
+      <view style="flex:1;height: 100%;padding-left:5px;">
+        商品评价（{{pdtCommentList.total}}）
+      </view>
+      <view style="flex:1;height: 100%;text-align:right;padding-right:5px;">
+        综合评分 <repeat for="{{scoreArray}}" index="index" item="item"><image src="../images/score.png" style="width: 15px; height: 15px;"/></repeat>
+      </view>
+    </view>
+    <repeat for="{{pdtCommentList.commentList}}" index="index1" item="item1">
+      <view style="color: #333333;font-size: 14px;border-bottom: 0.5px solid #eeeeee;">
+        <view style="display: flex; height: 20px;justify-content:center;">
+          <view style="flex:8;height:20px;padding-left:5px;">
+            <image src="{{item1.avater}}" style="width: 20px;height: 20px;"></image>
+            <view style="flex:8;height:20px;padding-left:5px;display: inline-block;">
+              {{item1.nickname}}
+              <repeat for="{{item1.scoreArray}}" index="index" item="item"><image src="../images/score.png" style="width: 15px; height: 15px;"/></repeat>
+            </view>
+          </view>
+          <view style="flex:4;height:20px;text-align:right;padding-right:5px;">{{item1.date}}</view>
+        </view>
+        <view style="text-indent: 5px;">
+          {{item1.comment}}
+        </view>
+      </view>
+    </repeat>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import detailsData from '../mock/detailsData'
+  export default class pdtComment extends wepy.component {
+    props = {
+      pdtid: {
+        type: String,
+        requried: true
+      },
+      type: {
+        type: String,
+        default: 'tab'
+      }
+    };
+    data = {
+      pdtCommentList: {},
+      scoreArray: [] // 数组用来循环评分星星
+    };
+    async onLoad() {
+      this.pdtCommentList = detailsData.commentsInfo
+      this.scoreArray = this.getScoreArray(this.pdtCommentList.score)
+      this.pdtCommentList.commentList.map(item => {
+        item.scoreArray = this.getScoreArray(item.score)
+      })
+      this.$apply()
+    };
+    methods = {
+    }
+    // 数组用来循环评分星星
+    getScoreArray(score) {
+      return new Array(score).fill('')
+    }
+  }
+</script>

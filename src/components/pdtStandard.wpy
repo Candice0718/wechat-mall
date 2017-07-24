@@ -1,0 +1,53 @@
+<style lang="less">
+</style>
+<template lang="wxml">
+  <view class="container">
+    <repeat for="{{pdtStandardList}}" index="index1" item="item1">
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  @tap="changeDropDown({{item1}}, {{index1}})">
+          <view class="weui-cell__bd" style="font-size: 16px;">{{item1.title}}</view>
+          <view class="weui-cell__ft showSpecifications-summary">
+            <image src="../images/add.png" style="width: 15px; height: 15px;" wx:if="{{!item1.dropDown}}"/>
+            <image src="../images/sub.png" style="width: 15px; height: 15px;" wx:if="{{item1.dropDown}}"/>
+          </view>
+        </view>
+        <view style="padding-bottom: 15px;" wx:if="{{item1.dropDown}}">
+          <repeat for="{{item1.description}}" index="index" item="item">
+            <view style="padding-left:20px; font-size: 14px; color: #666666;">{{item}}</view>
+          </repeat>
+        </view>
+      </view>
+    </repeat>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import detailsData from '../mock/detailsData'
+  export default class pdtStandard extends wepy.component {
+    props = {
+      pdtid: {
+        type: String,
+        requried: true
+      }
+    };
+    data = {
+      pdtStandardList: []
+    };
+    async onLoad() {
+      this.pdtStandardList = detailsData.pdtStandStandardData
+      this.pdtStandardList.map(item => {
+        item.dropDown = false
+      })
+      this.$apply()
+    };
+    methods = {
+      // 事件处理函数
+      changeDropDown: function(item, index) {
+        item.dropDown = !item.dropDown
+        this.pdtStandardList[index] = item
+        console.log(JSON.stringify(item))
+        this.$apply()
+      }
+    }
+  }
+</script>
